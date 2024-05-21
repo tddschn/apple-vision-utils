@@ -21,12 +21,12 @@ for file in "${files[@]}"; do
         lang_opt="-l eng"
     fi
 
-    # Run the script with the appropriate language option
-    $SCRIPT_COMMAND "$file" $lang_opt
-    hr
 
     # If the file is a PDF, run additional tests
     if [[ "$file" == *.pdf ]]; then
+        # Run the script with the appropriate language option
+        $SCRIPT_COMMAND "$file" $lang_opt -p
+        hr
         # Test PDF to text with JSON output
         echo "Test: PDF to text with JSON output"
         $SCRIPT_COMMAND "$file" -p -j
@@ -48,6 +48,10 @@ for file in "${files[@]}"; do
             echo "Cleaning up: $output_dir"
             rm -rf "$output_dir"
         fi
+    else
+        # Run the script with the appropriate language option
+        $SCRIPT_COMMAND "$file" $lang_opt
+        hr
     fi
 done
 
