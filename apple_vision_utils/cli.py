@@ -34,7 +34,7 @@ def image_to_text(img_path, lang="eng"):
         handler
     )
     vision_request.setRecognitionLanguages_([lang])
-    error = vision_handler.performRequests_error_([vision_request], None)
+    vision_handler.performRequests_error_([vision_request], None)
 
     return results
 
