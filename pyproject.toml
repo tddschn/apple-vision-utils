@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "apple-vision-utils"
-version = "0.1.1"
+version = "0.1.2"
 description = "Fast and accurate OCR on images and PDFs using Apple Vision framework directly from command line."
 authors = ["Teddy Xinyuan Chen <45612704+tddschn@users.noreply.github.com>"]
 readme = "README.md"
