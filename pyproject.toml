@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "apple-vision-utils"
+version = "0.1.0"
+description = "Fast and accurate OCR on images and PDFs using Apple Vision framework directly from command line."
+authors = ["Teddy Xinyuan Chen <45612704+tddschn@users.noreply.github.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/tddschn/apple-vision-utils"
+repository = "https://github.com/tddschn/apple-vision-utils"
+classifiers = ["Topic :: Utilities"]
+keywords = ["ocr", "apple-vision-framework"]
+[tool.poetry.scripts]
+apple-ocr = "apple_vision_utils.cli:main"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/tddschn/apple-vision-utils/issues"
+
+[tool.poetry.dependencies]
+python = ">=3.11, <4.0"
+pyobjc-core = "^10.2"
+pyobjc-framework-quartz = "^10.2"
+pyobjc-framework-vision = "^10.2"
+wurlitzer = "^3.1.0"
+pdf2image = "^1.17.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
