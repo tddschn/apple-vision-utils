@@ -1,6 +1,6 @@
 # Apple Vision Framework Python Utilities
 
-Fast and accurate OCR on images and PDFs using Apple Vision framework directly from command line.
+Fast and accurate OCR on images and PDFs using Apple Vision framework (`pyobjc-framework-Vision`) directly from command line.
 
 - [Apple Vision Framework Python Utilities](#apple-vision-framework-python-utilities)
   - [Features](#features)
@@ -14,7 +14,7 @@ Fast and accurate OCR on images and PDFs using Apple Vision framework directly f
 
 ## Features
 
-- Fast and accurate, multi-language support (`-l`, `--lang`), powered by Apple's industry-strength Vision framework.
+- Fast and accurate, multi-language support (`-l`, `--lang`), powered by Apple's industry-strength Vision framework (`pyobjc-framework-Vision`).
 - Supports all common input image formats: PNG, JPEG, TIFF and WebP.
 - Supports PDF input (the file gets converted to images first). This tool does NOT assume a file is PDF just because it has a `.pdf` extension, you need to pass `-p`, `--pdf` flag.
 - Outputs extracted text only by default, but can output in JSON format containing confidence of recognition for each line with `-j`, `--json` flag.
