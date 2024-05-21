@@ -133,7 +133,7 @@ def main():
         results = image_to_text(file_path, lang=args.lang)
 
     if args.json:
-        print(json.dumps(results, indent=4))
+        print(json.dumps(results, indent=2, ensure_ascii=False))
     else:
         for result in results:
             print(result["text"])
