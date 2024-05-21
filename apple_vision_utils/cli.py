@@ -9,6 +9,7 @@ import json
 import argparse
 import tempfile
 import os
+from apple_vision_utils import __version__
 
 
 def image_to_text(img_path, lang="eng"):
@@ -111,6 +112,12 @@ def main():
         "--pdf2image-dir",
         type=str,
         help="Specify the directory to store output images. By default, a secure temporary directory is created.",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
     )
     args = parser.parse_args()
 
