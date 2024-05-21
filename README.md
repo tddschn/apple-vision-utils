@@ -28,6 +28,12 @@ https://g.teddysc.me/96d5b1217b90035c163b3c97ce99112f
 
 ## Installation
 
+Requires Python >= 3.11, <4.0.
+
+Since this package uses Apple's Vision framework, it only works on macOS.
+
+To OCR PDFs with `-p`, you need to install required dependency `poppler` with `brew install poppler` ([detailed guide](https://github.com/Belval/pdf2image)).
+
 ### pipx
 
 This is the recommended installation method.
