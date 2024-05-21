@@ -1,17 +1,23 @@
+#!/usr/bin/env python3
+"""
+Author : Teddy Xinyuan Chen <45612704+tddschn@users.noreply.github.com>
+Date   : 2024-05-18
+"""
+
 import pathlib
 import json
 import argparse
-import Quartz
-import Vision
-from Cocoa import NSURL
-from Foundation import NSDictionary
-from wurlitzer import pipes
-from pdf2image import convert_from_path
 import tempfile
 import os
 
 
 def image_to_text(img_path, lang="eng"):
+    from Cocoa import NSURL
+    from Foundation import NSDictionary
+    import Quartz
+    import Vision
+    from wurlitzer import pipes
+
     input_url = NSURL.fileURLWithPath_(img_path)
 
     with pipes() as (out, err):
@@ -54,6 +60,8 @@ def make_request_handler(results):
 
 
 def pdf_to_images(pdf_path, output_dir=None):
+    from pdf2image import convert_from_path
+
     if output_dir is None:
         output_dir = tempfile.mkdtemp()
     else:
@@ -80,11 +88,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Extract text from an image or PDF using Apple's Vision framework."
     )
-    parser.add_argument(
-        "file_path",
-        type=str,
-        help="Path to the image (PNG, JPEG, WebP, TIFF all supported) or PDF file.",
-    )
+    parser.add_argument("file_path", type=str, help="Path to the image or PDF file.")
     parser.add_argument(
         "-j", "--json", action="store_true", help="Output results in JSON format."
     )

@@ -1,9 +1,9 @@
-*webp
-*.jpg
-*.jpeg
-*.tiff
-*.pdf
-*.png
+# *webp
+# *.jpg
+# *.jpeg
+# *.tiff
+# *.pdf
+# *.png
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
