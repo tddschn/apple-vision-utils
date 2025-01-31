@@ -10,6 +10,8 @@ Fast and accurate OCR on images and PDFs using Apple Vision framework (`pyobjc-f
     - [pip](#pip)
     - [`uv tool` installation doesn't work](#uv-tool-installation-doesnt-work)
   - [Usage](#usage)
+    - [Command Line](#command-line)
+    - [As a Library](#as-a-library)
   - [Develop](#develop)
   - [Test](#test)
 
@@ -19,7 +21,7 @@ Fast and accurate OCR on images and PDFs using Apple Vision framework (`pyobjc-f
 - Supports all common input image formats: PNG, JPEG, TIFF and WebP.
 - Supports PDF input (the file gets converted to images first). This tool does NOT assume a file is PDF just because it has a `.pdf` extension, you need to pass `-p`, `--pdf` flag.
 - Outputs extracted text only by default, but can output in JSON format containing confidence of recognition for each line with `-j`, `--json` flag.
-
+- Supports text clipping based on start and end markers (`-s`, `-S`, `-e`, `-E`).
 
 ## Demo
 
@@ -55,6 +57,8 @@ I tried to install this with `uv tool install` using different Python versions o
 
 ## Usage
 
+### Command Line
+
 ```
 $ apple-ocr --help
 
@@ -89,6 +93,25 @@ options:
   -V, --version         show program's version number and exit
 ```
 
+### As a Library
+
+You can also use the utility functions in your own Python code:
+
+```python
+from apple_vision_utils.utils import image_to_text, pdf_to_images, process_pdf, clip_results
+
+# Extract text from an image
+results = image_to_text("path/to/image.png", lang="eng")
+
+# Convert PDF to images
+images = pdf_to_images("path/to/document.pdf")
+
+# Process PDF for text recognition
+pdf_results = process_pdf("path/to/document.pdf", lang="eng")
+
+# Clip text results based on markers
+clipped_results = clip_results(results, start_marker_inclusive="Start", end_marker_exclusive="End")
+```
 
 ## Develop
 
