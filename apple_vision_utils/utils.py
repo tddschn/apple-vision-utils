@@ -156,24 +156,23 @@ def clip_results(
         print(clipped_results)
         # Output: [{"text": "Start marker", "confidence": 0.95}, {"text": "Text", "confidence": 0.90}]
     """
-    if start_marker_inclusive is None and start_marker_exclusive is None:
-        start_marker_inclusive = ""
-    if end_marker_inclusive is None and end_marker_exclusive is None:
-        end_marker_inclusive = ""
-
-    clipped_results = []
-    start_marker_found = False
-    for result in results:
-        text = result["text"]
-        if start_marker_inclusive and start_marker_inclusive in text:
-            start_marker_found = True
-        if start_marker_exclusive and start_marker_exclusive in text:
-            start_marker_found = False
-        if start_marker_found:
-            clipped_results.append(result)
-        if end_marker_inclusive and end_marker_inclusive in text:
-            break
-        if end_marker_exclusive and end_marker_exclusive in text:
-            break
-
-    return clipped_results
+    clipped = []
+    capturing = (not start_marker_inclusive) and (not start_marker_exclusive)
+    for item in results:
+        text = item["text"]
+        if not capturing:
+            if (start_marker_inclusive and start_marker_inclusive in text):
+                capturing = True
+                clipped.append(item)
+                continue
+            if (start_marker_exclusive and start_marker_exclusive in text):
+                capturing = True
+                continue
+        else:
+            if (end_marker_inclusive and end_marker_inclusive in text):
+                clipped.append(item)
+                break
+            if (end_marker_exclusive and end_marker_exclusive in text):
+                break
+            clipped.append(item)
+    return clipped
