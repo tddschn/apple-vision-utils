@@ -40,6 +40,18 @@ def main():
         help="Specify the directory to store output images. By default, a secure temporary directory is created.",
     )
     parser.add_argument(
+        '-s', '--start-marker-inclusive', type=str, default=None, help='Specify the start marker (included, as the first line of the extracted text) for text extraction in PDF.')
+    
+    parser.add_argument(
+        '-S', '--start-marker-exclusive', type=str, default=None, help='Specify the start marker (excluded, as the first line of the extracted text) for text extraction in PDF.')
+
+    parser.add_argument(
+        '-e', '--end-marker-inclusive', type=str, default=None, help='Specify the end marker (included, as the last line of the extracted text) for text extraction in PDF.')
+
+    parser.add_argument(
+        '-E', '--end-marker', type=str, default=None, help='Specify the end marker (excluded, as the last line of the extracted text) for text extraction in PDF.')
+
+    parser.add_argument(
         "-V",
         "--version",
         action="version",
