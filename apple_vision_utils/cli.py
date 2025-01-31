@@ -7,82 +7,8 @@ Date   : 2024-05-18
 import pathlib
 import json
 import argparse
-import tempfile
-import os
 from apple_vision_utils import __version__
-
-
-def image_to_text(img_path, lang="eng"):
-    from Cocoa import NSURL
-    from Foundation import NSDictionary
-    import Quartz
-    import Vision
-    from wurlitzer import pipes
-
-    input_url = NSURL.fileURLWithPath_(img_path)
-
-    with pipes() as (out, err):
-        input_image = Quartz.CIImage.imageWithContentsOfURL_(input_url)
-
-    vision_options = NSDictionary.dictionaryWithDictionary_({})
-    vision_handler = Vision.VNImageRequestHandler.alloc().initWithCIImage_options_(
-        input_image, vision_options
-    )
-    results = []
-    handler = make_request_handler(results)
-    vision_request = Vision.VNRecognizeTextRequest.alloc().initWithCompletionHandler_(
-        handler
-    )
-    vision_request.setRecognitionLanguages_([lang])
-    vision_handler.performRequests_error_([vision_request], None)
-
-    return results
-
-
-def make_request_handler(results):
-    if not isinstance(results, list):
-        raise ValueError("results must be a list")
-
-    def handler(request, error):
-        if error:
-            print(f"Error! {error}")
-        else:
-            observations = request.results()
-            for text_observation in observations:
-                recognized_text = text_observation.topCandidates_(1)[0]
-                results.append(
-                    {
-                        "text": recognized_text.string(),
-                        "confidence": recognized_text.confidence(),
-                    }
-                )
-
-    return handler
-
-
-def pdf_to_images(pdf_path, output_dir=None):
-    from pdf2image import convert_from_path
-
-    if output_dir is None:
-        output_dir = tempfile.mkdtemp()
-    else:
-        pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
-
-    images = convert_from_path(pdf_path)
-    img_paths = []
-    for i, image in enumerate(images):
-        img_path = os.path.join(output_dir, f"page_{i}.png")
-        image.save(img_path, "PNG")
-        img_paths.append(img_path)
-    return img_paths
-
-
-def process_pdf(pdf_path, lang):
-    images = pdf_to_images(pdf_path)
-    results = []
-    for img_path in images:
-        results.extend(image_to_text(img_path, lang))
-    return results
+from apple_vision_utils.utils import image_to_text, pdf_to_images, process_pdf
 
 
 def main():
