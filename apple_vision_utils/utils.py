@@ -118,3 +118,62 @@ def process_pdf(pdf_path: str, lang: str) -> list:
     for img_path in images:
         results.extend(image_to_text(img_path, lang))
     return results
+
+
+def clip_results(
+    results: list,
+    start_marker_inclusive: str = None,
+    start_marker_exclusive: str = None,
+    end_marker_inclusive: str = None,
+    end_marker_exclusive: str = None,
+) -> list:
+    """Clip text results based on start and end markers.
+
+    Args:
+        results: List of dictionaries containing recognized text and confidence scores.
+        start_marker_inclusive: Start marker for text extraction (inclusive).
+        start_marker_exclusive: Start marker for text extraction (exclusive).
+        end_marker_inclusive: End marker for text extraction (inclusive).
+        end_marker_exclusive: End marker for text extraction (exclusive).
+
+    Returns:
+        List of dictionaries containing clipped text and confidence scores.
+    
+        
+    Example:
+        results = [
+            {"text": "before", "confidence": 0.95},
+            {"text": "cjskaj Start marker lsjdkjfjdwo", "confidence": 0.95}, # only check if marker is in text, doesn't need to 100% match
+            {"text": "Text", "confidence": 0.90},
+            {"text": "End marker", "confidence": 0.85},
+            {"text": "after", "confidence": 0.85},
+        ]
+        clipped_results = clip_results(
+            results,
+            start_marker_inclusive="Start",
+            end_marker="End",
+        )
+        print(clipped_results)
+        # Output: [{"text": "Start marker", "confidence": 0.95}, {"text": "Text", "confidence": 0.90}]
+    """
+    if start_marker_inclusive is None and start_marker_exclusive is None:
+        start_marker_inclusive = ""
+    if end_marker_inclusive is None and end_marker_exclusive is None:
+        end_marker_inclusive = ""
+
+    clipped_results = []
+    start_marker_found = False
+    for result in results:
+        text = result["text"]
+        if start_marker_inclusive and start_marker_inclusive in text:
+            start_marker_found = True
+        if start_marker_exclusive and start_marker_exclusive in text:
+            start_marker_found = False
+        if start_marker_found:
+            clipped_results.append(result)
+        if end_marker_inclusive and end_marker_inclusive in text:
+            break
+        if end_marker_exclusive and end_marker_exclusive in text:
+            break
+
+    return clipped_results

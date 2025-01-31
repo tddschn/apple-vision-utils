@@ -8,7 +8,7 @@ import pathlib
 import json
 import argparse
 from apple_vision_utils import __version__
-from apple_vision_utils.utils import image_to_text, pdf_to_images, process_pdf
+from apple_vision_utils.utils import image_to_text, pdf_to_images, process_pdf, clip_results
 
 
 def main():
@@ -76,6 +76,15 @@ def main():
         results = process_pdf(file_path, lang=args.lang)
     else:
         results = image_to_text(file_path, lang=args.lang)
+
+    # Apply text clipping if markers are provided
+    results = clip_results(
+        results,
+        start_marker_inclusive=args.start_marker_inclusive,
+        start_marker_exclusive=args.start_marker_exclusive,
+        end_marker_inclusive=args.end_marker_inclusive,
+        end_marker_exclusive=args.end_marker,
+    )
 
     if args.json:
         print(json.dumps(results, indent=2, ensure_ascii=False))
