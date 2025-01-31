@@ -8,6 +8,7 @@ Fast and accurate OCR on images and PDFs using Apple Vision framework (`pyobjc-f
   - [Installation](#installation)
     - [pipx](#pipx)
     - [pip](#pip)
+    - [`uv tool` installation doesn't work](#uv-tool-installation-doesnt-work)
   - [Usage](#usage)
   - [Develop](#develop)
   - [Test](#test)
@@ -48,14 +49,16 @@ $ pipx install apple-vision-utils
 $ pip install apple-vision-utils
 ```
 
+### `uv tool` installation doesn't work
+
+I tried to install this with `uv tool install` using different Python versions on Apple Silicon Mac, it didn't work. May be caused by some peculiarities of objc interfacing libs. Just use `pipx` for now.
+
 ## Usage
 
 ```
 $ apple-ocr --help
 
-usage: apple-ocr [-h] [-j] [-p] [-l LANG] [--pdf2image-only]
-                 [--pdf2image-dir PDF2IMAGE_DIR] [-V]
-                 file_path
+usage: apple-ocr [-h] [-j] [-p] [-l LANG] [--pdf2image-only] [--pdf2image-dir PDF2IMAGE_DIR] [-s START_MARKER_INCLUSIVE] [-S START_MARKER_EXCLUSIVE] [-e END_MARKER_INCLUSIVE] [-E END_MARKER] [-V] file_path
 
 Extract text from an image or PDF using Apple's Vision framework.
 
@@ -75,6 +78,14 @@ options:
   --pdf2image-dir PDF2IMAGE_DIR
                         Specify the directory to store output images. By
                         default, a secure temporary directory is created.
+  -s START_MARKER_INCLUSIVE, --start-marker-inclusive START_MARKER_INCLUSIVE
+                        Specify the start marker (included, as the first line of the extracted text) for text extraction in PDF.
+  -S START_MARKER_EXCLUSIVE, --start-marker-exclusive START_MARKER_EXCLUSIVE
+                        Specify the start marker (excluded, as the first line of the extracted text) for text extraction in PDF.
+  -e END_MARKER_INCLUSIVE, --end-marker-inclusive END_MARKER_INCLUSIVE
+                        Specify the end marker (included, as the last line of the extracted text) for text extraction in PDF.
+  -E END_MARKER, --end-marker END_MARKER
+                        Specify the end marker (excluded, as the last line of the extracted text) for text extraction in PDF.
   -V, --version         show program's version number and exit
 ```
 
